@@ -14,7 +14,7 @@
 #import "ISRDataHelper.h"
 #import "SPSTextView.h"
 #import "SPSHud.h"
-
+#import <SVProgressHUD.h>
 #define SPColor(r,g,b)  [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 #define SPRandomColor SPColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 
@@ -48,7 +48,7 @@
 
 @end
 
-static int MaxNumberCount = 0;
+static int MaxNumberCount = 10;
 
 @implementation NumberExamView
 
@@ -75,17 +75,24 @@ static int MaxNumberCount = 0;
     [super awakeFromNib];
     UIButton *homeButton = [self createHomeButtonView];
     self.homeButton = homeButton;
-    DWBubbleMenuButton *drawDownwButton = [[DWBubbleMenuButton alloc] initWithFrame:CGRectMake(self.frame.size.width - homeButton.frame.size.width - 20.f,
+    DWBubbleMenuButton *drawDownwButton = [[DWBubbleMenuButton alloc] initWithFrame:CGRectMake(15,
                                                                                           74,
                                                                                           homeButton.frame.size.width,
                                                                                           homeButton.frame.size.height)
-                                                            expansionDirection:DirectionDown homeButtonView:homeButton];
+                                                            expansionDirection:DirectionRight homeButtonView:homeButton];
     [drawDownwButton addButtons:[self createDemoButtonArray]];
     [self addSubview:drawDownwButton];
     self.drawDownwButton = drawDownwButton;
     drawDownwButton.animationDuration = 0.2;
     self.option = oneDigit;
+    self.generateNumberLabel.layer.masksToBounds = YES;
+    self.generateNumberLabel.layer.cornerRadius = 10;
+    self.generateNumberLabel.layer.borderColor = [UIColor grayColor].CGColor;
     self.generateNumberLabel.hidden = YES;
+    self.numberTextView.font = [UIFont systemFontOfSize:15];
+    self.numberTextView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];
+    self.answerTextView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];
+    self.generateNumberLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];
     [self initRecognizer];
     //接收倒计时结束的通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(countDownDidEnd) name:countdownDidEndNotification object:nil];
@@ -133,8 +140,7 @@ static int MaxNumberCount = 0;
     }else
     {
         [self removeTimer];
-        [_iFlySpeechRecognizer stopListening];
-        [self resetAllUI];
+        [self resetAll];
     }
 }
 
@@ -186,6 +192,18 @@ static int MaxNumberCount = 0;
 
 -(void)NubmerShouldChange
 {
+    //每次游戏产生10个数字
+    if (self.numberArray.count == MaxNumberCount) {
+        //移除定时器
+        [self removeTimer];
+        //停止监听
+        [_iFlySpeechRecognizer stopListening];
+        [SVProgressHUD showSuccessWithStatus:@"Game Over"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+        return;
+    }
     int number = generateNumberWithNumberOption(self.option);
     NSString * numberString = nil;
     if (self.numberArray.count== 0) {
@@ -209,12 +227,16 @@ static int MaxNumberCount = 0;
 
 #pragma mark 业务方法
 
--(void)resetAllUI
+-(void)resetAll
 {
+    //停止语言识别
+    [_iFlySpeechRecognizer stopListening];
+    //清空所有数组
     [self.numberArray removeAllObjects];
     [self.answerArray removeAllObjects];
     self.answerTextView.text = @"";
     self.numberTextView.text = @"";
+    //隐藏hud
     [SPSHud dismissHud];
 }
 

@@ -24,18 +24,6 @@
 
 @implementation SPSHud
 
-//+ (SVProgressHUD*)sharedView {
-//    static dispatch_once_t once;
-//    
-//    static SVProgressHUD *sharedView;
-//#if !defined(SV_APP_EXTENSIONS)
-//    dispatch_once(&once, ^{ sharedView = [[self alloc] initWithFrame:[[[UIApplication sharedApplication] delegate] window].bounds]; });
-//#else
-//    dispatch_once(&once, ^{ sharedView = [[self alloc] initWithFrame:[[UIScreen mainScreen] bounds]]; });
-//#endif
-//    return sharedView;
-//}
-
 +(SPSHud *)shareHud
 {
     static SPSHud * shareHud;
@@ -53,7 +41,7 @@
     hud.layer.borderColor = [UIColor grayColor].CGColor;
     hud.superViewFrame = view.frame;
     hud.time = time;
-    hud.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    hud.backgroundColor = [UIColor blackColor];
     hud.centerLabel.text = [NSString stringWithFormat:@"%ld",(long)time];
     [hud deployView];
     hud.hidden = NO;
@@ -115,9 +103,11 @@
         self.centerLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.time];
     }else
     {
-        self.hidden =YES;
-        //发送倒计时结束的通知
-        [[NSNotificationCenter defaultCenter]postNotificationName:countdownDidEndNotification object:nil];
+        self.centerLabel.text = @"GO!";
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.hidden =YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:countdownDidEndNotification object:nil];
+        });
     }
 }
 

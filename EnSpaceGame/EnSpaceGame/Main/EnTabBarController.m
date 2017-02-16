@@ -8,7 +8,7 @@
 
 #import "EnTabBarController.h"
 #import "NumberExamVC.h"
-
+#import "MonthController.h"
 @interface EnTabBarController ()
 
 @end
@@ -37,17 +37,17 @@
     UINavigationController * numberNav = [[UINavigationController alloc] initWithRootViewController:numberVC];
     
     
-    NumberExamVC * homeVCTest = [NumberExamSB instantiateViewControllerWithIdentifier:@"NumberExam"];
-    UINavigationController * homeNavTest = [[UINavigationController alloc] initWithRootViewController:homeVCTest];
+    MonthController * month = [[MonthController alloc] init];
+    UINavigationController * monthTest = [[UINavigationController alloc] initWithRootViewController:month];
     
     [self setUpChildController:numberNav image:[UIImage imageNamed:@"tabbar_home"] selectedImage:[UIImage imageNamed:@"tabbar_home_selected"] title:@"Number"];
     
     
-    [self setUpChildController:homeNavTest image:[UIImage imageNamed:@"tabbar_home"] selectedImage:[UIImage imageNamed:@"tabbar_home_selected"] title:@"Month"];
+    [self setUpChildController:monthTest image:[UIImage imageNamed:@"tabbar_home"] selectedImage:[UIImage imageNamed:@"tabbar_home_selected"] title:@"Month"];
     
     
     [self addChildViewController:numberNav];
-    [self addChildViewController:homeNavTest];
+    [self addChildViewController:monthTest];
     
 }
 

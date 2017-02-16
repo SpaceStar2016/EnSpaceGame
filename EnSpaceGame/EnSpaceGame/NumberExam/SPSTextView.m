@@ -37,8 +37,36 @@
     if (self = [super initWithFrame:frame]) {
         // 禁止滚动
         self.scrollEnabled = NO;
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = 20.0;
+        self.layer.borderColor = [UIColor grayColor].CGColor;
+        self.layer.shadowOffset = CGSizeMake(0, 3);
+        self.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.layer.shadowRadius = 20.0;
+        self.layer.shadowOpacity = 1;
     }
     return self;
+}
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    // 禁止滚动
+    self.scrollEnabled = NO;
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = 20.0;
+    self.layer.borderColor = [UIColor grayColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(10,10);
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowRadius = 10.0;
+    self.layer.shadowOpacity = 0;
+}
+
+-(void)addShadow
+{
+    CALayer * shadowLayer = [CALayer layer];
+    shadowLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    
 }
 
 -(void)textDidChange
