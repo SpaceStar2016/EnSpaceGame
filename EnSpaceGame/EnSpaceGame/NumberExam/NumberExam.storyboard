@@ -59,8 +59,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Zl-nD-Akx" userLabel="NumberLabel">
-                                <rect key="frame" x="10" y="200" width="107" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Zl-nD-Akx" userLabel="NumberLabel">
+                                <rect key="frame" x="10" y="204" width="107" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="VkV-zc-HwK"/>
                                 </constraints>
@@ -74,8 +74,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTe-np-Q4X" userLabel="AnswerLabel">
-                                <rect key="frame" x="10" y="363" width="115" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTe-np-Q4X" userLabel="AnswerLabel">
+                                <rect key="frame" x="10" y="367" width="111" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Bmf-7N-GGq"/>
                                 </constraints>
@@ -93,9 +93,9 @@
                             <constraint firstItem="T9b-Vy-dZ2" firstAttribute="top" secondItem="9Pt-JR-4ST" secondAttribute="bottom" constant="50" id="9ql-IX-JKj"/>
                             <constraint firstItem="TTe-np-Q4X" firstAttribute="leading" secondItem="wIg-zZ-lR6" secondAttribute="leading" constant="10" id="Bnj-sF-315"/>
                             <constraint firstAttribute="trailing" secondItem="RTU-wO-AeO" secondAttribute="trailing" constant="10" id="DqW-ke-Zle"/>
-                            <constraint firstItem="Pls-Wy-yRy" firstAttribute="leading" secondItem="TTe-np-Q4X" secondAttribute="trailing" id="FJK-bu-OXo"/>
+                            <constraint firstItem="Pls-Wy-yRy" firstAttribute="leading" secondItem="TTe-np-Q4X" secondAttribute="trailing" constant="4" id="FJK-bu-OXo"/>
                             <constraint firstItem="x8w-xo-gJ3" firstAttribute="top" secondItem="9Pt-JR-4ST" secondAttribute="bottom" id="KqC-Oe-743"/>
-                            <constraint firstItem="3Zl-nD-Akx" firstAttribute="top" secondItem="RTU-wO-AeO" secondAttribute="top" id="NqQ-yz-caz"/>
+                            <constraint firstItem="3Zl-nD-Akx" firstAttribute="top" secondItem="RTU-wO-AeO" secondAttribute="top" constant="4" id="NqQ-yz-caz"/>
                             <constraint firstItem="RTU-wO-AeO" firstAttribute="top" secondItem="24d-Zk-8wx" secondAttribute="bottom" constant="20" id="Ydq-Eq-nDo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="T9b-Vy-dZ2" secondAttribute="trailing" constant="80" id="bMA-IH-Hlt"/>
                             <constraint firstItem="Pls-Wy-yRy" firstAttribute="width" secondItem="RTU-wO-AeO" secondAttribute="width" id="ct6-lh-TmN"/>
@@ -106,7 +106,7 @@
                             <constraint firstAttribute="trailing" secondItem="x8w-xo-gJ3" secondAttribute="trailing" id="uG3-Kl-aLA"/>
                             <constraint firstItem="3Zl-nD-Akx" firstAttribute="leading" secondItem="wIg-zZ-lR6" secondAttribute="leading" constant="10" id="x79-GL-ndk"/>
                             <constraint firstItem="Pls-Wy-yRy" firstAttribute="height" secondItem="RTU-wO-AeO" secondAttribute="height" id="yVj-W4-URW"/>
-                            <constraint firstItem="TTe-np-Q4X" firstAttribute="top" secondItem="Pls-Wy-yRy" secondAttribute="top" id="ysT-5d-wl1"/>
+                            <constraint firstItem="TTe-np-Q4X" firstAttribute="top" secondItem="Pls-Wy-yRy" secondAttribute="top" constant="4" id="ysT-5d-wl1"/>
                         </constraints>
                         <connections>
                             <outlet property="answerTextView" destination="Pls-Wy-yRy" id="XYh-DM-UAc"/>

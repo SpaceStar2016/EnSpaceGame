@@ -60,6 +60,7 @@
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowRadius = 10.0;
     self.layer.shadowOpacity = 0;
+    self.font = [UIFont systemFontOfSize:17];
 }
 
 -(void)addShadow

@@ -38,11 +38,11 @@
     SPSHud * hud = [self shareHud];
     hud.layer.masksToBounds = YES;
     hud.layer.cornerRadius = 10.0;
-    hud.layer.borderColor = [UIColor grayColor].CGColor;
+    hud.layer.borderColor = [UIColor whiteColor].CGColor;
     hud.superViewFrame = view.frame;
     hud.time = time;
-    hud.backgroundColor = [UIColor blackColor];
-    hud.centerLabel.text = [NSString stringWithFormat:@"%ld",(long)time];
+    hud.backgroundColor = [UIColor whiteColor];
+    hud.centerLabel.text = [NSString stringWithFormat:@"Ready  %ld",(long)time];
     [hud deployView];
     hud.hidden = NO;
     [view addSubview:hud];
@@ -54,7 +54,7 @@
     if (self = [super init]) {
         UILabel *  centerLabel = [UILabel new];
         centerLabel.font = [UIFont systemFontOfSize:25];
-        centerLabel.textColor = [UIColor whiteColor];
+        centerLabel.textColor = [UIColor blackColor];
         centerLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:centerLabel];
         self.centerLabel = centerLabel;
@@ -100,11 +100,11 @@
 {
     self.time--;
     if (self.time >= 1) {
-        self.centerLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.time];
+        self.centerLabel.text = [NSString stringWithFormat:@"Ready  %lu",(unsigned long)self.time];
     }else
     {
         self.centerLabel.text = @"GO!";
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.hidden =YES;
             [[NSNotificationCenter defaultCenter] postNotificationName:countdownDidEndNotification object:nil];
         });

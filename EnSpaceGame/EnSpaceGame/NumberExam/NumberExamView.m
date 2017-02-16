@@ -88,10 +88,10 @@ static int MaxNumberCount = 10;
     self.generateNumberLabel.layer.masksToBounds = YES;
     self.generateNumberLabel.layer.cornerRadius = 10;
     self.generateNumberLabel.layer.borderColor = [UIColor grayColor].CGColor;
-    self.generateNumberLabel.hidden = YES;
+    self.generateNumberLabel.hidden = NO;
     self.numberTextView.font = [UIFont systemFontOfSize:15];
-    self.numberTextView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];
-    self.answerTextView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];
+    self.numberTextView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.0];
+    self.answerTextView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.0];
     self.generateNumberLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];
     [self initRecognizer];
     //接收倒计时结束的通知
@@ -387,8 +387,7 @@ static inline unsigned int generateNumberWithNumberOption(numberOption option)
 - (void) onBeginOfSpeech
 {
     NSLog(@"onBeginOfSpeech");
-    //显示数字label
-    self.generateNumberLabel.hidden = NO;
+
 }
 
 /**
@@ -397,8 +396,6 @@ static inline unsigned int generateNumberWithNumberOption(numberOption option)
 - (void) onEndOfSpeech
 {
     NSLog(@"onEndOfSpeech");
-    [self removeTimer];
-    self.generateNumberLabel.hidden = YES;
 }
 
 
