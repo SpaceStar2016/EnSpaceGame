@@ -41,7 +41,7 @@
                                     <constraint firstAttribute="width" constant="100" id="aDh-pY-HAp"/>
                                     <constraint firstAttribute="height" constant="50" id="z51-QC-ekJ"/>
                                 </constraints>
-                                <state key="normal" title="BEGIN">
+                                <state key="normal" title="Begin">
                                     <color key="titleColor" red="0.053734250663129979" green="0.053734250663129979" blue="0.053734250663129979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <state key="selected" title="Stop"/>
