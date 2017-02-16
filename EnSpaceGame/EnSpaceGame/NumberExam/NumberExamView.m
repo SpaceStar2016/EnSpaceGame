@@ -84,6 +84,8 @@
     self.generateNumberLabel.hidden = YES;
     [self initRecognizer];
     
+    
+    
 }
 
 - (UIButton *)createHomeButtonView {

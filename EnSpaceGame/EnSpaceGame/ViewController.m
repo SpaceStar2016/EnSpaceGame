@@ -22,6 +22,8 @@
 //    AVSpeechSynthesizer *av = [[AVSpeechSynthesizer alloc]init];
 //    AVSpeechUtterance *utterance = [[AVSpeechUtterance alloc]initWithString:@"According to my plans I should graduate in 1978"]; //需要转换的文本
 //    [av speakUtterance:utterance];
+    
+    
 }
 
 
