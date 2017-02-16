@@ -93,8 +93,9 @@
 {
     NSMutableString * mStr = [NSMutableString new];
     for (NSString * str in textArray) {
-        
+        [mStr appendString:str];
     }
+    self.text = mStr;
 }
 
 /**通过字节计算长度*/

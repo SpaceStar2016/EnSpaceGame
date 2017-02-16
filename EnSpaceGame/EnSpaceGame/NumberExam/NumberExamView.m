@@ -13,6 +13,7 @@
 #import "IATConfig.h"
 #import "ISRDataHelper.h"
 #import "SPSTextView.h"
+#import "SPSHud.h"
 
 #define SPColor(r,g,b)  [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 #define SPRandomColor SPColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
@@ -31,20 +32,23 @@
 @property (weak, nonatomic) IBOutlet SPSTextView *numberTextView;
 @property (weak, nonatomic) IBOutlet SPSTextView *answerTextView;
 
-
 @property (nonatomic, strong) NSString * result;
 
-
+@property(nonatomic,weak)SPSHud * hud;
 
 /** 语言识别*/
 @property (nonatomic, strong) IFlySpeechRecognizer *iFlySpeechRecognizer;
 @property (nonatomic,strong) IFlyPcmRecorder *pcmRecorder;//录音器，用于音频流识别的数据传入
 
+//存放产生数字的数组
 @property(nonatomic,strong)NSMutableArray * numberArray;
 
+//存放用户回答的数字的数组
 @property(nonatomic,strong)NSMutableArray * answerArray;
 
 @end
+
+static int MaxNumberCount = 0;
 
 @implementation NumberExamView
 
@@ -83,7 +87,8 @@
     self.option = oneDigit;
     self.generateNumberLabel.hidden = YES;
     [self initRecognizer];
-    
+    //接收倒计时结束的通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(countDownDidEnd) name:countdownDidEndNotification object:nil];
 }
 
 - (UIButton *)createHomeButtonView {
@@ -123,13 +128,13 @@
     
     button.selected = !button.selected;
     if (button.selected) {
-        [self addTimer];
-        [self startRecognizer];
-        
+        self.hud = [SPSHud showHud:self AndCoundownTime:3];
+
     }else
     {
         [self removeTimer];
         [_iFlySpeechRecognizer stopListening];
+        [self resetAllUI];
     }
 }
 
@@ -182,10 +187,35 @@
 -(void)NubmerShouldChange
 {
     int number = generateNumberWithNumberOption(self.option);
-    
-    NSString * numberString = [NSString stringWithFormat:@"%d",number];
+    NSString * numberString = nil;
+    if (self.numberArray.count== 0) {
+       numberString = [NSString stringWithFormat:@"%d",number];
+    }else
+    {
+       numberString = [NSString stringWithFormat:@",%d",number];
+    }
     [self.numberArray addObject:numberString];
-    self.generateNumberLabel.text = numberString;
+    self.generateNumberLabel.text = [NSString stringWithFormat:@"%d",number];
+    [self.numberTextView setTextViewArray:self.numberArray];
+}
+
+-(void)countDownDidEnd
+{
+    //添加产生数字的定时器
+    [self addTimer];
+    //开始语音识别
+    [self startRecognizer];
+}
+
+#pragma mark 业务方法
+
+-(void)resetAllUI
+{
+    [self.numberArray removeAllObjects];
+    [self.answerArray removeAllObjects];
+    self.answerTextView.text = @"";
+    self.numberTextView.text = @"";
+    [SPSHud dismissHud];
 }
 
 #pragma mark Tool
@@ -378,31 +408,13 @@ static inline unsigned int generateNumberWithNumberOption(numberOption option)
     }
     _result =[NSString stringWithFormat:@"%@",resultString];
     NSString * resultFromJson =  [ISRDataHelper stringFromJson:resultString];
-    
+    [self.answerArray addObject:resultFromJson];
+    [self.answerTextView setTextViewArray:self.answerArray];
     if (isLast){
         NSLog(@"听写结果(json)：%@测试",  self.result);
     }
     
 }
-
-
-
-/**
- 有界面，听写结果回调
- resultArray：听写结果
- isLast：表示最后一次
- ****/
-- (void)onResult:(NSArray *)resultArray isLast:(BOOL)isLast
-{
-    NSMutableString *result = [[NSMutableString alloc] init];
-    NSDictionary *dic = [resultArray objectAtIndex:0];
-    
-    for (NSString *key in dic) {
-        [result appendFormat:@"%@",key];
-    }
-
-}
-
 
 
 /**
@@ -435,6 +447,10 @@ static inline unsigned int generateNumberWithNumberOption(numberOption option)
 }
 
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 -(void)layoutSubviews
 {
